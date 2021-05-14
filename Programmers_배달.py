@@ -4,6 +4,7 @@
 - 제한사항 : 두 마을을 연결하는 도로는 여러개 있을 수 있다. 따라서, 이중 딕셔너리 사용하지 않음
 
 """
+
 import heapq
 def GraphPath(N,road,K):
     count=0
