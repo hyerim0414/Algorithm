@@ -1,7 +1,9 @@
+#2019 KAKAO BLIND RECRUITMENT
 '''
 - sort 후 인접 원소들과 비교하여 uniqueness 판단
 - set을 이용하여 갯수파악
 '''
+
 from itertools import combinations
 def solution(relation):
     answer = 0
