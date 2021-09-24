@@ -19,7 +19,6 @@ def bi_search(start,end,tree_length,M):
         return bi_search(mid+1,end,tree_length,M)
     
 
-
 N,M= map(int,sys.stdin.readline().split())
 tree_length=list(map(int,sys.stdin.readline().split()))
 
