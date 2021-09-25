@@ -5,7 +5,7 @@ import sys
 M,N = map(int,sys.stdin.readline().split())
 
 m = [list(map(int, input().split())) for _ in range(M)]
-mem = [[-1]*N for _ in range(M)]
+mem = [[-1 for _ in range(N)] for _ in range(M)]
 
 dx = [1, -1, 0, 0]
 dy = [0, 0, 1, -1]
