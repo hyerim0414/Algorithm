@@ -5,6 +5,7 @@ import sys
 T=int(sys.stdin.readline())
 
 seq=list(map(int,sys.stdin.readline().split()))
+
 dp=[0 for _ in range(T)]
 dp[0]=seq[0]
 
