@@ -1,37 +1,46 @@
-#1260번
+#1260번-220121
 
+import sys
 from collections import deque
 
-def dfs(start):
-    stack=[start]
-    while(stack):
-        cur=stack.pop()
-        if(visited[cur]==0):
-            visited[cur]=1
-            print(cur, end=' ')
-            for i in sorted(node[cur],reverse=True):
-                stack.append(i)
+N, M, start= map(int,sys.stdin.readline().split())
 
-def bfs(start):
-    queue=deque([start])
-    while(queue):
-        cur=queue.popleft()
-        if(visited[cur]==1):
-            visited[cur]=0
-            print(cur, end=' ')
-            for i in node[cur]:
-                queue.append(i)
+node=[set() for _ in range(N+1)] #정점 번호가 작은 것부터 이동
 
-N,E,S=map(int,input().split(" "))
-node=[set() for i in range(N+1)]
-
-for _ in range(E):
-    u, v=map(int,input().split(" "))
+for _ in range(M):
+    u,v=map(int,sys.stdin.readline().split())
     node[u].add(v)
     node[v].add(u)
-visited=[0 for i in range(N+1)]
-dfs(S)
-print()
-visited=[1 for i in range(N+1)]
-bfs(S)
-print()
+
+def dfs(N,start):
+    res=[]
+    visited=[0]*(N+1)
+    visited[0]=1
+    q=deque([start])
+    while(q):
+        cur=q.pop()
+        if(visited[cur]==0):
+            visited[cur]=1
+            res.append(cur)
+            for i in sorted(node[cur],reverse=True):
+                q.append(i)
+    print(*res)
+    return
+
+def bfs(N,start):
+    res=[]
+    visited=[0]*(N+1)
+    visited[0]=1
+    q=deque([start])
+    while(q):
+        cur=q.popleft()
+        if(visited[cur]==0):
+            visited[cur]=1
+            res.append(cur)
+            for i in node[cur]:
+                q.append(i)
+    print(*res)
+
+
+dfs(N,start)
+bfs(N,start)
