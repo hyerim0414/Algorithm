@@ -1,4 +1,11 @@
-#1260번-220121
+#1260번-220122
+'''
+- 간선이 이어지지 않은 경우 고려
+- 런타임 에러 -> 시작점에 간선이 연결되지 않은 경우 시작점만 출력
+- 기본 이론부터 다시 복습
+1000 1 1
+999 1000
+'''
 
 import sys
 from collections import deque
@@ -13,34 +20,37 @@ for _ in range(M):
     node[v].add(u)
 
 def dfs(N,start):
-    res=[]
-    visited=[0]*(N+1)
-    visited[0]=1
     q=deque([start])
     while(q):
         cur=q.pop()
         if(visited[cur]==0):
             visited[cur]=1
             res.append(cur)
-            for i in sorted(node[cur],reverse=True):
-                q.append(i)
-    print(*res)
+            if(node[cur]!=[]):
+                for i in sorted(node[cur],reverse=True):
+                    q.append(i) 
     return
 
 def bfs(N,start):
-    res=[]
-    visited=[0]*(N+1)
-    visited[0]=1
     q=deque([start])
     while(q):
         cur=q.popleft()
         if(visited[cur]==0):
             visited[cur]=1
             res.append(cur)
-            for i in node[cur]:
+            if(node[cur]==[]):
+                break
+            for i in sorted(node[cur]):
                 q.append(i)
-    print(*res)
+    return
 
-
+visited=[0]*(N+1)
+visited[0]=1
+res=[]
 dfs(N,start)
+print(*res)
+visited=[0]*(N+1)
+visited[0]=1
+res=[]
 bfs(N,start)
+print(*res)
