@@ -1,15 +1,16 @@
-#240228
+#24.02.29
 #큐
-#요세푸스 문제와 유사
 
 import sys
 from collections import deque
 
 N=int(sys.stdin.readline())
 queue=deque(range(1,N+1))
+res=[]
 
 while(len(queue)>1):
-    queue.popleft()
+    res.append(queue.popleft())
     queue.append(queue.popleft())
+res.append(queue.popleft())
 
-print(queue.pop())
+print(' '.join(list(map(str,res))))
