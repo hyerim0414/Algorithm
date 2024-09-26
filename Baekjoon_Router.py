@@ -1,26 +1,26 @@
 #24.23.09
+# 240926
 #큐
 
 import sys
 from collections import deque
 
-N=int(sys.stdin.readline())
+N = int(sys.stdin.readline().strip())
+q = deque([])
+ck = 0
 
-queue=deque()
-
-while(1):
-    x=int(sys.stdin.readline())
-    if (x==-1):
+while True:
+    cur = int(sys.stdin.readline().strip())
+    if(cur == -1):
         break
-    elif(x==0):
-        queue.popleft()
-    else:
-        if(len(queue)<N):
-            queue.append(x)
+    if(cur >0 and ck<N):
+        q.append(cur)
+        ck+=1
+    elif(cur == 0):
+        q.popleft()
+        ck-=1
 
-if(len(queue)==0):
-    print("empty")
+if(ck>0):
+    print(" ".join(map(str,q)))
 else:
-    print(' '.join(map(str,queue)))
-
-
+    print("empty")

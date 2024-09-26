@@ -14,8 +14,8 @@ res = [0 for i in range(N+1)] # 맨 마지막 1일 걸리는 스케줄에 대해
 for i in range(N-1,-1,-1):
     Ti, Pi = table[i]
     if(i+Ti > N):
-        continue
+        res[i]=res[i+1]
     else:
-        res[i] = max(res[i],Pi+res[i+Ti])
+        res[i] = max(res[i+1],Pi+res[i+Ti])
     
 print(max(res))
