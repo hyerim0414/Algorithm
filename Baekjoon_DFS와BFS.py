@@ -1,56 +1,60 @@
-#1260번-220122
 '''
-- 간선이 이어지지 않은 경우 고려
-- 런타임 에러 -> 시작점에 간선이 연결되지 않은 경우 시작점만 출력
-- 기본 이론부터 다시 복습
-1000 1 1
-999 1000
+241118
+- 방문가능한 정점 여러개 => 번호가 작은 것부터 방문
+- 방문할 점 없는 경우 종료
+
+* 배운점
+- list앞에 *을 붙이고 print하면 [] 없이 리스트 원소 출력가능
+- set 은 순서가 없으므로, 작은 번호부터 방문이라는 규칙을 위해서는 sorted()함수 적용해야함
 '''
 
 import sys
 from collections import deque
 
-N, M, start= map(int,sys.stdin.readline().split())
+N, M, start_node = list(map(int,sys.stdin.readline().split()))
 
-node=[set() for _ in range(N+1)] #정점 번호가 작은 것부터 이동
+graph = [set([]) for _ in range(N+1)] # linked list로 
 
 for _ in range(M):
-    u,v=map(int,sys.stdin.readline().split())
-    node[u].add(v)
-    node[v].add(u)
+    i,j = list(map(int,sys.stdin.readline().split()))
+    graph[i].add(j)
+    graph[j].add(i)
 
-def dfs(N,start):
-    q=deque([start])
-    while(q):
-        cur=q.pop()
-        if(visited[cur]==0):
-            visited[cur]=1
+global dfs_res
+dfs_res = []
+def dfs(graph, start_node, visited = [False for _ in range(N+1)]):
+    visited[start_node]= True
+    dfs_res.append(start_node)
+    for i in graph[start_node]:
+        if not visited[i]:
+            dfs(graph,i,visited)
+    return dfs_res
+
+def dfs_2(graph, start_node, visited = [False for _ in range(N+1)]):
+    res = []
+    queue = deque([start_node])
+    while queue:
+        cur = queue.pop()
+        if not visited[cur]:
+            visited[cur] = True
             res.append(cur)
-            if(node[cur]!=[]):
-                for i in sorted(node[cur],reverse=True):
-                    q.append(i) 
-    return
+            for i in sorted(graph[cur],reverse=True):
+                queue.append(i)
+    return res
 
-def bfs(N,start):
-    q=deque([start])
-    while(q):
-        cur=q.popleft()
-        if(visited[cur]==0):
-            visited[cur]=1
+def bfs(graph, start_node, visited = [False for _ in range(N+1)]):
+    res = []
+    queue = deque([start_node])
+    while queue:
+        cur = queue.popleft()
+        if not visited[cur]:
+            visited[cur]=True
             res.append(cur)
-            if(node[cur]==[]):
-                break
-            for i in sorted(node[cur]):
-                q.append(i)
-    return
+            for i in sorted(graph[cur]):
+                queue.append(i)
+    return res
 
-visited=[0]*(N+1)
-visited[0]=1
-res=[]
-dfs(N,start)
-print(*res)
-visited=[0]*(N+1)
-visited[0]=1
-res=[]
-bfs(N,start)
-print(*res)
+    
+
+print(*dfs_2(graph, start_node))
+print(*bfs(graph, start_node))

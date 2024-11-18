@@ -1,30 +1,44 @@
-#2606번
+# 241118
+# 2606번
 
 import sys
 from collections import deque
 
-N=int(sys.stdin.readline())
-M=int(sys.stdin.readline())
+N = int(sys.stdin.readline())
+M = int(sys.stdin.readline())
 
-node=[set() for _ in range(N+1)]
+graph = [[] for _ in range(N+1)]
+global visited
+visited = [False for _ in range(N+1)]
 
-for _ in range(M):
-    u,v=map(int,sys.stdin.readline().split())
-    node[u].add(v)
-    node[v].add(u)
+for i in range(M):
+    i, j = list(map(int,sys.stdin.readline().split()))
+    graph[i].append(j)
+    graph[j].append(i)
 
-def bfs(N,start):
-    visited=[0]*(N+1)
-    res=-1
-    q=deque([start])
-    while(q):
-        cur=q.popleft()
-        if(visited[cur]==0):
-            visited[cur]=1
-            res+=1
-            for i in node[cur]:
-                q.append(i)
-    print(res)
+# start node = 1
+# 1번에서 시작하는 그래프 탐색 (bfs/dfs)
 
+def bfs(graph, v):
+    visited[v] = True
+    queue = deque([v])
+    while queue:
+        cur = queue.popleft()
+        for i in graph[cur]:
+            if not visited[i]:
+                queue.append(i)
+                visited[i]=True
 
-bfs(N,1)
+def dfs(graph, v):
+    visited[v] = True
+    queue = deque([v])
+    while queue:
+        cur = queue.pop()
+        for i in graph[cur]:
+            if not visited[i]:
+                queue.append(i)
+                visited[i]=True
+
+# bfs(graph, 1)
+dfs(graph,1)
+print(sum(visited)-1)
