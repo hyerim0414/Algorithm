@@ -1,15 +1,22 @@
-#1541번
 '''
-- '-'마다 잘라서, 각자 합한 후 빼주기
-'''
+24/11/19
 
+- 최대 5자리 수 나올 수 있음
+- 수는 0으로 시작할 수 있음
+- 입력 길이 50보다 작거나 같
+
+'''
 import sys
+s = sys.stdin.readline()[:-1]
+oper = []
+num = []
 
-num=sys.stdin.readline()[:-1].split('-') 
-N=[list(map(int,x.split('+'))) for x in num]
+tmp = s.split("-")
 
-ans=sum(N[0])
-for i in range(1,len(N)):
-    ans-=sum(N[i])
+res=sum(list(map(int,tmp[0].split("+"))))
 
-print(ans)
+for x in tmp[1:]:
+    y = list(map(int,x.split("+")))
+    res-=sum(y)
+
+print(res)
